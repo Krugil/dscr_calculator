@@ -1,52 +1,75 @@
-# DSCR Calculator
+# Debt Service Coverage Ratio (DSCR) Calculator
 
-This is an all‑static Debt Service Coverage Ratio calculator.
+A responsive, hyper-polished, static client-side **Debt Service Coverage Ratio (DSCR)** Calculator app for real estate investors, underwriters, and commercial mortgage borrowers.
 
-## Usage
-1. Open `index.html` in a browser.
-2. Enter the required numbers:
-   - **Gross rental/operating income**
-   - **Operating expenses** (excluding debt service)
-   - **Loan amount**
-   - **Annual interest rate (%)**
-   - **Loan term (years)**
-   - **Payment frequency** (Monthly or Annual)
-3. Click **Calculate** to see:
-   - Periodic debt payment (TDS)
-   - Net Operating Income (NOI)
-   - DSCR value
+Live Demo: Hosted on [GitHub Pages](https://krugil.github.io/dscr_calculator/)
 
-## Test Cases
-1. **Case A**
-   - Gross: $10,000
-   - Expenses: $3,000
-   - Loan: $200,000
-   - Interest: 5%
-   - Term: 20 years
+---
+
+## Formula & Definitions
+
+$$\text{DSCR} = \frac{\text{Net Operating Income (NOI)}}{\text{Total Debt Service (TDS)}}$$
+
+- **Net Operating Income (NOI)** = $\text{Gross Rental/Operating Income} - \text{Operating Expenses}$  
+  *(Operating expenses exclude mortgage principal and interest).*
+- **Total Debt Service (TDS)** = Total scheduled periodic loan payments (principal + interest) amortized over the loan term:
+  $$P = \frac{L \cdot r}{1 - (1 + r)^{-n}}$$
+  Where:
+  - $L$ = Loan principal amount
+  - $r$ = Periodic interest rate (Annual rate / payment frequency)
+  - $n$ = Total scheduled payments (Loan term in years &times; payment frequency)
+
+---
+
+## Verified Test Cases
+
+The application math has been verified against the following standard test cases:
+
+1. **Case A (Standard Residential / Commercial Investment)**
+   - Gross Income: $10,000 / month
+   - Operating Expenses: $3,000 / month
+   - Loan Amount: $200,000
+   - Interest Rate: 5.0%
+   - Amortization Term: 20 Years
    - Frequency: Monthly
-   - Expected DSCR ≈ 5.30
+   - **NOI:** $7,000.00
+   - **Periodic TDS:** $1,319.91
+   - **Expected DSCR:** **`5.30`**
 
-2. **Case B**
-   - Gross: $8,000
-   - Expenses: $2,500
-   - Loan: $150,000
-   - Interest: 4%
-   - Term: 15 years
+2. **Case B (Annualized Debt Service / Low NOI)**
+   - Gross Income: $8,000 / year
+   - Operating Expenses: $2,500 / year
+   - Loan Amount: $150,000
+   - Interest Rate: 4.0%
+   - Amortization Term: 15 Years
    - Frequency: Annual
-   - Expected DSCR ≈ 0.41
+   - **NOI:** $5,500.00
+   - **Periodic TDS:** $13,491.17
+   - **Expected DSCR:** **`0.41`**
 
-3. **Case C**
-   - Gross: $12,500
-   - Expenses: $4,000
-   - Loan: $250,000
-   - Interest: 6%
-   - Term: 25 years
+3. **Case C (Long-Term Multifamily Asset)**
+   - Gross Income: $12,500 / month
+   - Operating Expenses: $4,000 / month
+   - Loan Amount: $250,000
+   - Interest Rate: 6.0%
+   - Amortization Term: 25 Years
    - Frequency: Monthly
-   - Expected DSCR ≈ 5.28
+   - **NOI:** $8,500.00
+   - **Periodic TDS:** $1,610.75
+   - **Expected DSCR:** **`5.28`**
 
-> **Known limitations**
-> - Interest‑only periods are not handled.
-> - Balloon payments are not supported.
-> - Multi‑property calculations are beyond the scope of this tool.
-> 
-> These edge cases are *escalated* to the user for clarifications.
+---
+
+## Features
+
+- **Instant Calculation Engine:** Live reactive updates as users enter loan and property parameters.
+- **Visual Safety Meter & Health Badges:** Real-time feedback showing where the DSCR falls compared to standard lender thresholds (&ge; 1.25x).
+- **SEO & AdSense Compatibility:** Clean meta tags, semantic HTML5 structure, non-intrusive standard ad placement slots, and educational industry benchmark guides.
+- **100% Static & Zero-Dependency:** Pure HTML5, modern CSS3 variables, and vanilla ES6 JavaScript. Deployable anywhere with zero build pipeline.
+
+---
+
+## Assumptions & Known Limitations
+
+- **Standard Amortization:** Calculates standard fully-amortizing fixed-rate loans.
+- **Edge Cases:** Specialized structures such as interest-only introductory periods, balloon payment maturities, or blended portfolio-wide DSCR require customized loan schedules.
