@@ -1,66 +1,38 @@
 body {
   font-family: Arial, sans-serif;
   margin: 0;
-  padding: 0;
-  background: #f9f9f9;
-  color: #333;
+  padding: 20px;
+  background: #f5f5f5;
 }
-
-header {
-  background: #004080;
-  color: white;
-  padding: 1rem;
-  text-align: center;
+form {
+  max-width: 400px;
+  margin: auto;
+  background: #fff;
+  padding: 20px;
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
-
-main {
-  max-width: 600px;
-  margin: 1rem auto;
-  padding: 1rem;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
 label {
   display: block;
-  margin-top: 0.75rem;
-  font-weight: bold;
+  margin-bottom: 10px;
 }
-
 input, select {
   width: 100%;
-  padding: 0.5rem;
-  margin-top: 0.25rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  padding: 8px;
+  margin-top: 4px;
+  box-sizing: border-box;
 }
-
 button {
-  margin-top: 1rem;
-  padding: 0.75rem;
-  width: 100%;
-  background: #004080;
-  color: white;
+  margin-top: 10px;
+  padding: 10px 15px;
+  background: #28a745;
+  color: #fff;
   border: none;
-  border-radius: 4px;
   cursor: pointer;
 }
-
-button:hover {
-  background: #003060;
-}
-
-#result p {
-  margin-top: 1rem;
-  font-size: 1.2rem;
-  font-weight: bold;
-}
-
-/* Responsive */
-@media (max-width: 480px) {
-  main {
-    margin: 0.5rem;
-    padding: 0.75rem;
-  }
+#results {
+  margin-top: 20px;
+  padding: 10px;
+  background: #e9ecef;
+  border-radius: 4px;
 }

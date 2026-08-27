@@ -1,50 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DSCR Calculator</title>
-  <meta name="description" content="Simple static calculator for Debt Service Coverage Ratio.">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="style.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>DSCR Calculator</h1>
-  </header>
-
-  <div id="adsense-top" style="display:none;"></div>
-
-  <main>
-    <form id="dscr-form">
-      <label for="grossIncome">Gross Rental/Operating Income</label>
-      <input type="number" id="grossIncome" name="grossIncome" step="0.01" required>
-
-      <label for="operatingExpenses">Operating Expenses</label>
-      <input type="number" id="operatingExpenses" name="operatingExpenses" step="0.01" required>
-
-      <label for="loanAmount">Loan Amount</label>
-      <input type="number" id="loanAmount" name="loanAmount" step="0.01" required>
-
-      <label for="interestRate">Annual Interest Rate (%)</label>
-      <input type="number" id="interestRate" name="interestRate" step="0.01" required>
-
-      <label for="termYears">Loan Term (Years)</label>
-      <input type="number" id="termYears" name="termYears" step="1" required>
-
-      <label for="paymentFreq">Payment Frequency</label>
-      <select id="paymentFreq" name="paymentFreq" required>
+  <h1>Debt Service Coverage Ratio Calculator</h1>
+  <form id="calcForm">
+    <label>Gross rental/operating income:
+      <input type="number" id="gross" required>
+    </label>
+    <label>Operating expenses (excluding debt service):
+      <input type="number" id="expenses" required>
+    </label>
+    <label>Loan amount:
+      <input type="number" id="loan" required>
+    </label>
+    <label>Annual interest rate (%):
+      <input type="number" id="interest" required>
+    </label>
+    <label>Loan term (years):
+      <input type="number" id="term" required>
+    </label>
+    <label>Payment frequency:
+      <select id="frequency">
         <option value="monthly">Monthly</option>
         <option value="annual">Annual</option>
       </select>
-
-      <button type="submit">Calculate</button>
-    </form>
-
-    <section id="result"><p></p></section>
-  </main>
-
-  <div id="adsense-bottom" style="display:none;"></div>
-
+    </label>
+    <button type="button" id="calcBtn">Calculate</button>
+  </form>
+  <div id="results"></div>
   <script src="script.js"></script>
 </body>
 </html>
