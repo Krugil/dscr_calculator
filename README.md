@@ -2,7 +2,7 @@
 
 A responsive, hyper-polished, static client-side **Debt Service Coverage Ratio (DSCR)** Calculator app for real estate investors, underwriters, and commercial mortgage borrowers.
 
-Live Demo: Hosted on [GitHub Pages](https://krugil.github.io/dscr_calculator/)
+Live Demo: [https://netdscr.com/](https://netdscr.com/)
 
 ---
 
