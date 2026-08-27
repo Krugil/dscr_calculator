@@ -270,34 +270,39 @@ label {
   position: relative;
   display: flex;
   align-items: center;
+  width: 100%;
 }
 
 .input-prefix {
   position: absolute;
-  left: 12px;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
   font-weight: 600;
   color: var(--text-muted);
+  pointer-events: none;
+  user-select: none;
+  line-height: 1;
+  z-index: 2;
 }
 
 .input-suffix {
   position: absolute;
-  right: 12px;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
   font-weight: 600;
   color: var(--text-muted);
-}
-
-.input-prefix-wrapper input {
-  padding-left: 28px;
-}
-
-.input-suffix-wrapper input {
-  padding-right: 28px;
+  pointer-events: none;
+  user-select: none;
+  line-height: 1;
+  z-index: 2;
 }
 
 input[type="number"],
 select {
   width: 100%;
-  padding: 10px 12px;
+  padding: 10px 14px;
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   font-size: 1rem;
@@ -305,6 +310,17 @@ select {
   background-color: #ffffff;
   color: var(--text);
   transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+/* Explicit offset padding for prefix and suffix inputs */
+.input-prefix-wrapper input[type="number"],
+.input-prefix-wrapper input {
+  padding-left: 32px;
+}
+
+.input-suffix-wrapper input[type="number"],
+.input-suffix-wrapper input {
+  padding-right: 32px;
 }
 
 input[type="number"]:focus,
