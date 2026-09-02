@@ -196,6 +196,22 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Mobile nav toggle
+  const navToggle = document.getElementById('navToggle');
+  const headerNav = document.getElementById('headerNav');
+  if (navToggle && headerNav) {
+    navToggle.addEventListener('click', () => {
+      const isOpen = headerNav.classList.toggle('is-open');
+      navToggle.setAttribute('aria-expanded', String(isOpen));
+    });
+    headerNav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        headerNav.classList.remove('is-open');
+        navToggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
   // Load default Case A on initial start
   loadPreset('caseA');
 });

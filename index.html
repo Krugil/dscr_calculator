@@ -31,7 +31,12 @@
         </svg>
         <span class="logo-text">DSCR<strong>Analytics</strong></span>
       </div>
-      <nav class="header-nav">
+      <button type="button" class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="headerNav" aria-label="Toggle navigation menu">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+      <nav class="header-nav" id="headerNav">
         <a href="#calculator">Calculator</a>
         <a href="#about-dscr">What is DSCR?</a>
         <a href="#benchmarks">Lender Benchmarks</a>
@@ -263,24 +268,24 @@
             </thead>
             <tbody>
               <tr>
-                <td><strong class="text-danger">&lt; 1.00x</strong></td>
-                <td><span class="badge badge-danger">Negative Cash Flow</span></td>
-                <td>The property generates insufficient income to cover debt payments. The borrower must pay out of pocket to avoid default.</td>
+                <td data-label="DSCR Range"><strong class="text-danger">&lt; 1.00x</strong></td>
+                <td data-label="Underwriting Status"><span class="badge badge-danger">Negative Cash Flow</span></td>
+                <td data-label="Financial Meaning">The property generates insufficient income to cover debt payments. The borrower must pay out of pocket to avoid default.</td>
               </tr>
               <tr>
-                <td><strong class="text-warning">1.00x – 1.24x</strong></td>
-                <td><span class="badge badge-warning">Marginal / Tight</span></td>
-                <td>The property breaks even or has a razor-thin cash cushion. Lenders usually require larger down payments, additional cash reserves, or personal guarantees.</td>
+                <td data-label="DSCR Range"><strong class="text-warning">1.00x – 1.24x</strong></td>
+                <td data-label="Underwriting Status"><span class="badge badge-warning">Marginal / Tight</span></td>
+                <td data-label="Financial Meaning">The property breaks even or has a razor-thin cash cushion. Lenders usually require larger down payments, additional cash reserves, or personal guarantees.</td>
               </tr>
               <tr>
-                <td><strong class="text-success">1.25x – 1.49x</strong></td>
-                <td><span class="badge badge-success">Standard / Prime</span></td>
-                <td>The typical minimum threshold for conventional commercial mortgages and standard non-QM DSCR loan programs, providing a 25% safety margin.</td>
+                <td data-label="DSCR Range"><strong class="text-success">1.25x – 1.49x</strong></td>
+                <td data-label="Underwriting Status"><span class="badge badge-success">Standard / Prime</span></td>
+                <td data-label="Financial Meaning">The typical minimum threshold for conventional commercial mortgages and standard non-QM DSCR loan programs, providing a 25% safety margin.</td>
               </tr>
               <tr>
-                <td><strong class="text-primary">&ge; 1.50x</strong></td>
-                <td><span class="badge badge-primary">Strong / Low Risk</span></td>
-                <td>High cash flow buffer with superior risk protection. Investors may qualify for optimal interest rates and higher loan-to-value (LTV) limits.</td>
+                <td data-label="DSCR Range"><strong class="text-primary">&ge; 1.50x</strong></td>
+                <td data-label="Underwriting Status"><span class="badge badge-primary">Strong / Low Risk</span></td>
+                <td data-label="Financial Meaning">High cash flow buffer with superior risk protection. Investors may qualify for optimal interest rates and higher loan-to-value (LTV) limits.</td>
               </tr>
             </tbody>
           </table>
