@@ -328,18 +328,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Auto-calculate on input changes for instant responsiveness. 'change' as
   // well as 'input' so the checkbox and select both retrigger.
-  const inputs = calcForm.querySelectorAll('input, select');
-  inputs.forEach(input => {
-    const handler = () => {
-      const loan = parseFloat(document.getElementById('loan').value);
-      const term = parseFloat(document.getElementById('term').value);
-      if (loan > 0 && term > 0) {
-        calculateDSCR();
-      }
-    };
-    input.addEventListener('input', handler);
-    input.addEventListener('change', handler);
-  });
+  if (calcForm) {
+    const inputs = calcForm.querySelectorAll('input, select');
+    inputs.forEach(input => {
+      const handler = () => {
+        const loan = parseFloat(document.getElementById('loan').value);
+        const term = parseFloat(document.getElementById('term').value);
+        if (loan > 0 && term > 0) {
+          calculateDSCR();
+        }
+      };
+      input.addEventListener('input', handler);
+      input.addEventListener('change', handler);
+    });
+  }
 
   // Preset Buttons
   const presetBtns = document.querySelectorAll('.btn-preset');
@@ -389,6 +391,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Load default Case A on initial start
-  loadPreset('caseA');
+  // Load default Case A on initial start if calculator inputs exist
+  if (document.getElementById('loan')) {
+    loadPreset('caseA');
+  }
 });

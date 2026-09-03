@@ -23,14 +23,14 @@
 <body>
   <header class="site-header">
     <div class="container header-inner">
-      <div class="logo">
+      <a href="index.html" class="logo">
         <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
           <line x1="8" y1="21" x2="16" y2="21"></line>
           <line x1="12" y1="17" x2="12" y2="21"></line>
         </svg>
         <span class="logo-text">DSCR<strong>Analytics</strong></span>
-      </div>
+      </a>
       <button type="button" class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="headerNav" aria-label="Toggle navigation menu">
         <span class="nav-toggle-bar"></span>
         <span class="nav-toggle-bar"></span>
@@ -41,6 +41,7 @@
         <a href="#about-dscr">What is DSCR?</a>
         <a href="#benchmarks">Lender Benchmarks</a>
         <a href="#formula">Formula</a>
+        <a href="about.html">About</a>
       </nav>
     </div>
   </header>
@@ -309,6 +310,13 @@
 
   <footer class="site-footer">
     <div class="container footer-inner">
+      <nav class="footer-nav" aria-label="Footer Navigation">
+        <a href="about.html">About</a>
+        <span class="footer-nav-divider" aria-hidden="true">&bull;</span>
+        <a href="privacy.html">Privacy Policy</a>
+        <span class="footer-nav-divider" aria-hidden="true">&bull;</span>
+        <a href="terms.html">Terms of Service</a>
+      </nav>
       <p>&copy; 2026 DSCR Calculator. Static Client-Side Financial Tool. All calculations are for informational purposes only.</p>
       <p class="footer-links">More free tools: <a href="https://runwaysnap.com">SaaS Runway Calculator</a></p>
     </div>
