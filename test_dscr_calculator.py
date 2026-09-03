@@ -8,7 +8,7 @@ Setup (one time):
 Usage:
     python test_dscr_calculator.py
 
-Point TARGET_URL at either the local file or the live deployed page.
+Run `python serve.py` first, then point TARGET_URL at it (or at the live page).
 Every expected value is computed HERE, independently, from the same real
 formula — never hardcoded from what the calculator itself claimed.
 """
@@ -20,15 +20,20 @@ import random
 # ============================================================
 # Point this at local file OR live URL
 # ============================================================
-TARGET_URL = "file:///C:/Users/okebe/Documents/vscode/dscr_calculator/index.html"
+TARGET_URL = "http://localhost:8140/"   # start serve.py first
 # TARGET_URL = "https://krugil.github.io/dscr_calculator/"
 
 
-def expected_dscr(gross, expenses, loan, annual_rate_pct, term_years, freq_per_year):
-    """The one real source of truth for correct math — independent of the app."""
+def expected_dscr(gross, expenses, loan, annual_rate_pct, term_years, freq_per_year,
+                  interest_only=False):
+    """The one real source of truth for correct math — independent of the app.
+    Interest-only debt service is the periodic interest charge alone (L * r),
+    with no principal component."""
     r = (annual_rate_pct / 100) / freq_per_year
     n = term_years * freq_per_year
-    if r == 0:
+    if interest_only:
+        pmt = loan * r
+    elif r == 0:
         pmt = loan / n
     else:
         pmt = (loan * r) / (1 - (1 + r) ** (-n))
@@ -56,7 +61,19 @@ TEST_CASES = []
 
 for name, gross, expenses, loan, rate, term, freq in BASE_TEST_CASES:
     exp_dscr, exp_pmt, exp_noi = expected_dscr(gross, expenses, loan, rate, term, freq)
-    TEST_CASES.append((name, gross, expenses, loan, rate, term, freq, exp_dscr, exp_pmt, exp_noi))
+    TEST_CASES.append((name, gross, expenses, loan, rate, term, freq, False, exp_dscr, exp_pmt, exp_noi))
+
+# Every verified base case re-run as interest-only, where debt service is the
+# periodic interest charge alone. Rates of 0 are skipped: interest-only at 0%
+# is a degenerate no-payment loan with an undefined ratio, handled in the UI
+# rather than asserted as a number here.
+for name, gross, expenses, loan, rate, term, freq in BASE_TEST_CASES:
+    if rate <= 0:
+        continue
+    exp_dscr, exp_pmt, exp_noi = expected_dscr(gross, expenses, loan, rate, term, freq,
+                                               interest_only=True)
+    TEST_CASES.append((f"{name} [interest-only]", gross, expenses, loan, rate, term, freq,
+                       True, exp_dscr, exp_pmt, exp_noi))
 
 # ============================================================
 # Append 1,000 Random Scenario Checks
@@ -84,13 +101,34 @@ for i in range(1, 1001):
         r_rate,
         r_term,
         r_freq,
+        False,
         exp_dscr,
         exp_pmt,
         exp_noi
     ))
 
+# 250 randomized interest-only scenarios, same independent-expectation pattern.
+random.seed(2026)
+for i in range(1, 251):
+    r_gross = round(random.uniform(2000, 100000), 2)
+    r_expenses = round(random.uniform(0, r_gross * 0.8), 2)
+    r_loan = round(random.uniform(50000, 5000000), 2)
+    r_rate = round(random.uniform(0.5, 15.0), 2)
+    r_term = random.randint(1, 40)
+    r_freq = random.choice([12, 1])
 
-def fill_and_calculate(page, gross, expenses, loan, rate, term, freq_per_year):
+    exp_dscr, exp_pmt, exp_noi = expected_dscr(
+        r_gross, r_expenses, r_loan, r_rate, r_term, r_freq, interest_only=True
+    )
+    TEST_CASES.append((
+        f"Random IO Scenario #{i:04d}",
+        r_gross, r_expenses, r_loan, r_rate, r_term, r_freq, True,
+        exp_dscr, exp_pmt, exp_noi
+    ))
+
+
+def fill_and_calculate(page, gross, expenses, loan, rate, term, freq_per_year,
+                       interest_only=False):
     """
     Fills out the DSCR calculator form using exact element IDs from index.html:
     #gross, #expenses, #loan, #interest, #term, #frequency, #calcBtn
@@ -103,6 +141,9 @@ def fill_and_calculate(page, gross, expenses, loan, rate, term, freq_per_year):
 
     freq_value = "monthly" if freq_per_year == 12 else "annual"
     page.select_option("#frequency", freq_value)
+
+    if page.is_checked("#interestOnly") != interest_only:
+        page.set_checked("#interestOnly", interest_only)
 
     page.click("#calcBtn")
 
@@ -123,9 +164,9 @@ def run_tests():
         page = browser.new_page()
         page.goto(TARGET_URL)
 
-        for idx, (name, gross, expenses, loan, rate, term, freq, expected, exp_pmt, exp_noi) in enumerate(TEST_CASES, 1):
+        for idx, (name, gross, expenses, loan, rate, term, freq, io_mode, expected, exp_pmt, exp_noi) in enumerate(TEST_CASES, 1):
             try:
-                fill_and_calculate(page, gross, expenses, loan, rate, term, freq)
+                fill_and_calculate(page, gross, expenses, loan, rate, term, freq, io_mode)
                 displayed = read_displayed_dscr(page)
                 if displayed is None:
                     results.append((name, "FAIL", "No DSCR value found on page", expected, None))
