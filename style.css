@@ -788,3 +788,17 @@ select:focus {
   font-size: 0.85rem;
   color: var(--text-muted);
 }
+
+.footer-links {
+  margin-top: 8px;
+}
+
+.footer-links a {
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
