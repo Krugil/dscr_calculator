@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DSCR Calculator Widget</title>
+<style>
+  /* ============================================================
+     Scoped styles — everything lives under .dw-root so this file
+     is safe to embed directly in a host page (styles never touch
+     unscoped tags like body/input/button) as well as inside an
+     iframe, where the standalone html/body rules below just give
+     the frame a sane background.
+     ============================================================ */
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: transparent;
+  }
+
+  .dw-root {
+    --dw-bg: #ffffff;
+    --dw-bg-soft: #f7f8fa;
+    --dw-border: #e2e5eb;
+    --dw-text: #1a1d29;
+    --dw-text-muted: #6b7280;
+    --dw-accent: #2563eb;
+    --dw-accent-contrast: #ffffff;
+    --dw-green-bg: #e6f7ec;
+    --dw-green-text: #0f7a3d;
+    --dw-green-border: #34c76f;
+    --dw-yellow-bg: #fff8e1;
+    --dw-yellow-text: #92650a;
+    --dw-yellow-border: #f2b705;
+    --dw-red-bg: #fdecec;
+    --dw-red-text: #b3261e;
+    --dw-red-border: #ef4444;
+    --dw-shadow: 0 1px 3px rgba(16, 24, 40, 0.08), 0 1px 2px rgba(16, 24, 40, 0.06);
+
+    all: initial;
+    box-sizing: border-box;
+    display: block;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--dw-text);
+    background: var(--dw-bg);
+    max-width: 680px;
+    width: 100%;
+    margin: 0 auto;
+    border: 1px solid var(--dw-border);
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: var(--dw-shadow);
+    line-height: 1.4;
+    font-size: 15px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .dw-root {
+      --dw-bg: #14161f;
+      --dw-bg-soft: #1c1f2b;
+      --dw-border: #2b2f3d;
+      --dw-text: #eef0f5;
+      --dw-text-muted: #9aa1b1;
+      --dw-accent: #5b8def;
+      --dw-accent-contrast: #0b0d14;
+      --dw-green-bg: #0f2a1c;
+      --dw-green-text: #4ade80;
+      --dw-green-border: #22c55e;
+      --dw-yellow-bg: #2e2508;
+      --dw-yellow-text: #fbbf24;
+      --dw-yellow-border: #d19a05;
+      --dw-red-bg: #2c1414;
+      --dw-red-text: #f87171;
+      --dw-red-border: #ef4444;
+      --dw-shadow: 0 1px 3px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  .dw-root *, .dw-root *::before, .dw-root *::after {
+    box-sizing: border-box;
+    font-family: inherit;
+  }
+
+  /* Only h1/h2/p/label carry browser-default margins — div and span never
+     do, so leaving them out keeps this reset's specificity (0,1,0) from
+     ever outranking the single-class component rules below (.dw-results,
+     .dw-badge-row, etc.), which was silently zeroing their margin/padding. */
+  .dw-root h1, .dw-root h2, .dw-root p, .dw-root label {
+    margin: 0;
+    padding: 0;
+  }
+
+  .dw-header { margin-bottom: 18px; }
+  .dw-header h1 {
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--dw-text);
+  }
+  .dw-header p {
+    margin-top: 4px;
+    font-size: 13px;
+    color: var(--dw-text-muted);
+  }
+
+  .dw-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px 14px;
+    margin-bottom: 18px;
+  }
+
+  .dw-field { display: flex; flex-direction: column; gap: 5px; }
+  .dw-field label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--dw-text-muted);
+    letter-spacing: 0.01em;
+  }
+
+  .dw-input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .dw-input-wrap .dw-prefix,
+  .dw-input-wrap .dw-suffix {
+    position: absolute;
+    font-size: 13px;
+    color: var(--dw-text-muted);
+    pointer-events: none;
+  }
+  .dw-input-wrap .dw-prefix { left: 10px; }
+  .dw-input-wrap .dw-suffix { right: 10px; }
+
+  .dw-root input[type="number"] {
+    all: unset;
+    box-sizing: border-box;
+    width: 100%;
+    background: var(--dw-bg-soft);
+    border: 1px solid var(--dw-border);
+    border-radius: 8px;
+    padding: 9px 10px;
+    font-size: 14px;
+    color: var(--dw-text);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  .dw-root input[type="number"].dw-has-prefix { padding-left: 22px; }
+  .dw-root input[type="number"].dw-has-suffix { padding-right: 26px; }
+  .dw-root input[type="number"]:focus {
+    border-color: var(--dw-accent);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+  }
+  .dw-root input[type="number"]::-webkit-outer-spin-button,
+  .dw-root input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  .dw-root input[type="number"] { -moz-appearance: textfield; }
+
+  .dw-results {
+    background: var(--dw-bg-soft);
+    border: 1px solid var(--dw-border);
+    border-radius: 10px;
+    padding: 16px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .dw-metric { display: flex; flex-direction: column; gap: 3px; }
+  .dw-metric .dw-metric-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--dw-text-muted);
+  }
+  .dw-metric .dw-metric-value {
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--dw-text);
+  }
+
+  .dw-badge-row { display: flex; justify-content: center; margin-top: 12px; margin-bottom: 12px; }
+  .dw-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: 9999px;
+    font-size: 13px;
+    font-weight: 700;
+    border: 1.5px solid var(--dw-border);
+    background: var(--dw-bg-soft);
+    color: var(--dw-text-muted);
+    text-align: center;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  }
+  .dw-badge .dw-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+    flex-shrink: 0;
+  }
+  .dw-badge[data-tier="1"] {
+    background: var(--dw-green-bg);
+    color: var(--dw-green-text);
+    border-color: var(--dw-green-border);
+  }
+  .dw-badge[data-tier="2"] {
+    background: var(--dw-yellow-bg);
+    color: var(--dw-yellow-text);
+    border-color: var(--dw-yellow-border);
+  }
+  .dw-badge[data-tier="0"] {
+    background: var(--dw-red-bg);
+    color: var(--dw-red-text);
+    border-color: var(--dw-red-border);
+  }
+
+  .dw-footer {
+    border-top: 1px solid var(--dw-border);
+    padding-top: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .dw-root button {
+    all: unset;
+    box-sizing: border-box;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 8px;
+    padding: 9px 14px;
+    text-align: center;
+    transition: opacity 0.15s ease, background 0.15s ease;
+  }
+  .dw-root button:focus-visible {
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
+  }
+  .dw-root button:active { opacity: 0.85; }
+
+  /* ".dw-root .dw-embed-toggle" (two classes) deliberately outranks the
+     ".dw-root button" base rule's (class + type) specificity so padding
+     and margin-top here aren't silently lost to that rule's `all: unset`. */
+  .dw-root .dw-embed-toggle {
+    background: var(--dw-bg-soft);
+    border: 1px solid var(--dw-border) !important;
+    color: var(--dw-text);
+    align-self: flex-start;
+    margin-top: 12px;
+    padding: 10px 16px;
+  }
+
+  .dw-embed-panel {
+    display: none;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .dw-embed-panel.dw-open { display: flex; }
+
+  .dw-root textarea {
+    all: unset;
+    box-sizing: border-box;
+    width: 100%;
+    resize: vertical;
+    min-height: 64px;
+    background: var(--dw-bg-soft);
+    border: 1px solid var(--dw-border);
+    border-radius: 8px;
+    padding: 10px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 12px;
+    color: var(--dw-text);
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+
+  .dw-copy-btn {
+    background: var(--dw-accent);
+    color: var(--dw-accent-contrast);
+    align-self: flex-start;
+  }
+  .dw-copy-btn[data-copied="true"] {
+    background: var(--dw-green-border);
+  }
+
+  .dw-disclaimer {
+    font-size: 11px;
+    color: var(--dw-text-muted);
+  }
+
+  /* ---------------- Mobile / narrow-viewport layout ---------------- */
+  @media (max-width: 480px) {
+    .dw-root { padding: 16px; border-radius: 10px; }
+    .dw-grid { grid-template-columns: 1fr; gap: 10px; }
+    .dw-results { grid-template-columns: 1fr 1fr; }
+    .dw-results .dw-metric:nth-child(3) { grid-column: 1 / -1; }
+    .dw-metric .dw-metric-value { font-size: 17px; }
+    .dw-badge { font-size: 12px; padding: 8px 14px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="dw-root" id="dwRoot" data-testid="dscr-widget">
+
+  <div class="dw-header">
+    <h1>DSCR Calculator</h1>
+    <p>Estimate your Debt Service Coverage Ratio for a rental property loan.</p>
+  </div>
+
+  <div class="dw-grid">
+    <div class="dw-field">
+      <label for="dw-property-value">Purchase Price / Property Value</label>
+      <div class="dw-input-wrap">
+        <span class="dw-prefix">$</span>
+        <input type="number" id="dw-property-value" class="dw-has-prefix" min="0" step="1000" value="400000" inputmode="decimal" data-testid="dw-property-value">
+      </div>
+    </div>
+
+    <div class="dw-field">
+      <label for="dw-loan-amount">Loan Amount</label>
+      <div class="dw-input-wrap">
+        <span class="dw-prefix">$</span>
+        <input type="number" id="dw-loan-amount" class="dw-has-prefix" min="0" step="1000" value="300000" inputmode="decimal" data-testid="dw-loan-amount">
+      </div>
+    </div>
+
+    <div class="dw-field">
+      <label for="dw-interest-rate">Interest Rate</label>
+      <div class="dw-input-wrap">
+        <input type="number" id="dw-interest-rate" class="dw-has-suffix" min="0" step="0.125" value="7" inputmode="decimal" data-testid="dw-interest-rate">
+        <span class="dw-suffix">%</span>
+      </div>
+    </div>
+
+    <div class="dw-field">
+      <label for="dw-amort-years">Amortization</label>
+      <div class="dw-input-wrap">
+        <input type="number" id="dw-amort-years" class="dw-has-suffix" min="1" step="1" value="30" inputmode="decimal" data-testid="dw-amort-years">
+        <span class="dw-suffix">yrs</span>
+      </div>
+    </div>
+
+    <div class="dw-field">
+      <label for="dw-monthly-rent">Gross Monthly Rental Income</label>
+      <div class="dw-input-wrap">
+        <span class="dw-prefix">$</span>
+        <input type="number" id="dw-monthly-rent" class="dw-has-prefix" min="0" step="50" value="3200" inputmode="decimal" data-testid="dw-monthly-rent">
+      </div>
+    </div>
+
+    <div class="dw-field">
+      <label for="dw-annual-taxes">Annual Property Taxes</label>
+      <div class="dw-input-wrap">
+        <span class="dw-prefix">$</span>
+        <input type="number" id="dw-annual-taxes" class="dw-has-prefix" min="0" step="100" value="4000" inputmode="decimal" data-testid="dw-annual-taxes">
+      </div>
+    </div>
+
+    <div class="dw-field">
+      <label for="dw-annual-insurance">Annual Insurance</label>
+      <div class="dw-input-wrap">
+        <span class="dw-prefix">$</span>
+        <input type="number" id="dw-annual-insurance" class="dw-has-prefix" min="0" step="100" value="1500" inputmode="decimal" data-testid="dw-annual-insurance">
+      </div>
+    </div>
+
+    <div class="dw-field">
+      <label for="dw-monthly-hoa">Monthly HOA / Other</label>
+      <div class="dw-input-wrap">
+        <span class="dw-prefix">$</span>
+        <input type="number" id="dw-monthly-hoa" class="dw-has-prefix" min="0" step="10" value="0" inputmode="decimal" data-testid="dw-monthly-hoa">
+      </div>
+    </div>
+  </div>
+
+  <div class="dw-results">
+    <div class="dw-metric">
+      <span class="dw-metric-label">Monthly PITIA</span>
+      <span class="dw-metric-value" id="dw-out-pitia" data-testid="dw-out-pitia">$0</span>
+    </div>
+    <div class="dw-metric">
+      <span class="dw-metric-label">DSCR</span>
+      <span class="dw-metric-value" id="dw-out-dscr" data-testid="dw-out-dscr">0.00</span>
+    </div>
+    <div class="dw-metric">
+      <span class="dw-metric-label">Gross Rental Yield</span>
+      <span class="dw-metric-value" id="dw-out-yield" data-testid="dw-out-yield">0.0%</span>
+    </div>
+  </div>
+
+  <div class="dw-badge-row">
+    <span class="dw-badge" id="dw-badge" data-testid="dw-badge" data-tier="">
+      <span class="dw-dot"></span>
+      <span id="dw-badge-text">Enter your loan details</span>
+    </span>
+  </div>
+
+  <div class="dw-footer">
+    <button type="button" class="dw-embed-toggle" id="dw-embed-toggle" data-testid="dw-embed-toggle" aria-expanded="false">&lt;/&gt; Get embed code</button>
+    <div class="dw-embed-panel" id="dw-embed-panel" data-testid="dw-embed-panel">
+      <textarea readonly id="dw-embed-code" data-testid="dw-embed-code" rows="3"></textarea>
+      <button type="button" class="dw-copy-btn" id="dw-copy-btn" data-testid="dw-copy-btn" data-copied="false">Copy code</button>
+    </div>
+    <p class="dw-disclaimer">Estimate only. Confirm final figures with your lender. Powered by netdscr.com</p>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var root = document.getElementById("dwRoot");
+
+  var els = {
+    propertyValue: document.getElementById("dw-property-value"),
+    loanAmount: document.getElementById("dw-loan-amount"),
+    interestRate: document.getElementById("dw-interest-rate"),
+    amortYears: document.getElementById("dw-amort-years"),
+    monthlyRent: document.getElementById("dw-monthly-rent"),
+    annualTaxes: document.getElementById("dw-annual-taxes"),
+    annualInsurance: document.getElementById("dw-annual-insurance"),
+    monthlyHoa: document.getElementById("dw-monthly-hoa"),
+    outPitia: document.getElementById("dw-out-pitia"),
+    outDscr: document.getElementById("dw-out-dscr"),
+    outYield: document.getElementById("dw-out-yield"),
+    badge: document.getElementById("dw-badge"),
+    badgeText: document.getElementById("dw-badge-text"),
+    embedToggle: document.getElementById("dw-embed-toggle"),
+    embedPanel: document.getElementById("dw-embed-panel"),
+    embedCode: document.getElementById("dw-embed-code"),
+    copyBtn: document.getElementById("dw-copy-btn")
+  };
+
+  /**
+   * Reads a numeric field defensively: blank / non-numeric / negative
+   * input all collapse to 0 so the calculator never renders NaN or
+   * throws on malformed user input.
+   */
+  function readNumber(el, fallback) {
+    if (!el) return fallback || 0;
+    var n = parseFloat(el.value);
+    if (!isFinite(n) || isNaN(n)) return 0;
+    if (n < 0) return 0;
+    return n;
+  }
+
+  function currency(n, decimals) {
+    if (!isFinite(n) || isNaN(n)) return "$0";
+    var d = decimals === undefined ? 0 : decimals;
+    return "$" + n.toLocaleString("en-US", {
+      minimumFractionDigits: d,
+      maximumFractionDigits: d
+    });
+  }
+
+  function monthlyPrincipalAndInterest(loanAmount, annualRatePct, years) {
+    var n = Math.round(years * 12);
+    if (loanAmount <= 0 || n <= 0) return 0;
+
+    var monthlyRate = (annualRatePct / 100) / 12;
+    if (monthlyRate === 0) {
+      return loanAmount / n;
+    }
+    var factor = Math.pow(1 + monthlyRate, -n);
+    var denom = 1 - factor;
+    if (denom <= 0) return 0;
+    return (loanAmount * monthlyRate) / denom;
+  }
+
+  function classifyTier(dscr) {
+    // Strict comparison against the raw ratio — no rounding here, since
+    // rounding would push genuinely sub-1.00 ratios (e.g. 0.999) up into
+    // the Acceptable tier. The exact boundary values (1.00 / 1.25) are
+    // cleanly representable in floating point for the clean inputs this
+    // widget expects, so no tolerance is needed.
+    if (dscr >= 1.25) {
+      return { tier: 1, label: "Strong Approval Tier" };
+    }
+    if (dscr >= 1.00) {
+      return { tier: 2, label: "Acceptable / Standard Tier" };
+    }
+    return { tier: 0, label: "Requires Down Payment or Rate Adjustment" };
+  }
+
+  function recalculate() {
+    var propertyValue = readNumber(els.propertyValue);
+    var loanAmount = readNumber(els.loanAmount);
+    var interestRate = readNumber(els.interestRate);
+    var amortYears = readNumber(els.amortYears, 30);
+    var monthlyRent = readNumber(els.monthlyRent);
+    var annualTaxes = readNumber(els.annualTaxes);
+    var annualInsurance = readNumber(els.annualInsurance);
+    var monthlyHoa = readNumber(els.monthlyHoa);
+
+    var pi = monthlyPrincipalAndInterest(loanAmount, interestRate, amortYears);
+    var monthlyTaxes = annualTaxes / 12;
+    var monthlyInsurance = annualInsurance / 12;
+    var pitia = pi + monthlyTaxes + monthlyInsurance + monthlyHoa;
+
+    els.outPitia.textContent = currency(pitia, 0);
+
+    var hasSignal = pitia > 0 || monthlyRent > 0;
+
+    if (pitia <= 0) {
+      // No debt service to measure against — DSCR isn't a meaningful
+      // number yet. Show a safe placeholder instead of Infinity/NaN.
+      els.outDscr.textContent = "N/A";
+      els.badge.setAttribute("data-tier", "");
+      els.badgeText.textContent = hasSignal
+        ? "Add loan & expense details"
+        : "Enter your loan details";
+    } else {
+      var dscr = monthlyRent / pitia;
+      els.outDscr.textContent = dscr.toFixed(2);
+      var result = classifyTier(dscr);
+      els.badge.setAttribute("data-tier", String(result.tier));
+      els.badgeText.textContent = result.label;
+    }
+
+    if (propertyValue > 0) {
+      var grossYield = ((monthlyRent * 12) / propertyValue) * 100;
+      els.outYield.textContent = (isFinite(grossYield) ? grossYield.toFixed(1) : "0.0") + "%";
+    } else {
+      els.outYield.textContent = "N/A";
+    }
+
+    updateEmbedCode();
+  }
+
+  function updateEmbedCode() {
+    var src = window.location.href.split("#")[0];
+    var snippet = '<iframe src="' + src + '" width="100%" height="700" ' +
+      'style="border:none;max-width:680px;" loading="lazy" ' +
+      'title="DSCR Calculator"></iframe>';
+    els.embedCode.value = snippet;
+  }
+
+  function toggleEmbedPanel() {
+    var isOpen = els.embedPanel.classList.toggle("dw-open");
+    els.embedToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+    els.embedToggle.textContent = isOpen ? "✕ Hide embed code" : "</> Get embed code";
+    if (isOpen) {
+      updateEmbedCode();
+    }
+  }
+
+  function copyEmbedCode() {
+    var text = els.embedCode.value;
+
+    function onCopied() {
+      els.copyBtn.textContent = "Copied!";
+      els.copyBtn.setAttribute("data-copied", "true");
+      setTimeout(function () {
+        els.copyBtn.textContent = "Copy code";
+        els.copyBtn.setAttribute("data-copied", "false");
+      }, 1800);
+    }
+
+    function fallbackCopy() {
+      els.embedCode.focus();
+      els.embedCode.select();
+      try {
+        document.execCommand("copy");
+      } catch (err) {
+        /* clipboard unavailable in this context — snippet is still
+           visible and selectable for manual copy */
+      }
+      onCopied();
+    }
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(onCopied, fallbackCopy);
+    } else {
+      fallbackCopy();
+    }
+  }
+
+  var inputs = [
+    els.propertyValue, els.loanAmount, els.interestRate, els.amortYears,
+    els.monthlyRent, els.annualTaxes, els.annualInsurance, els.monthlyHoa
+  ];
+  inputs.forEach(function (el) {
+    el.addEventListener("input", recalculate);
+    el.addEventListener("change", recalculate);
+  });
+
+  els.embedToggle.addEventListener("click", toggleEmbedPanel);
+  els.copyBtn.addEventListener("click", copyEmbedCode);
+
+  recalculate();
+})();
+</script>
+
+</body>
+</html>
