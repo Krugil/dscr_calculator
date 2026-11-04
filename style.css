@@ -676,44 +676,6 @@ input[type="number"]:focus {
   color: var(--text-muted);
 }
 
-/* ==================== Ads ==================== */
-.ad-container {
-  margin: 28px 0;
-  display: flex;
-  justify-content: center;
-}
-
-.ad-slot {
-  width: 100%;
-  max-width: 728px;
-  min-height: 90px;
-  background: var(--bg-deep);
-  border: 1px dashed var(--border-strong);
-  border-radius: var(--radius-sm);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 8px;
-  position: relative;
-}
-
-.ad-label {
-  position: absolute;
-  top: 4px;
-  right: 8px;
-  font-size: 0.62rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: #a8a29e;
-}
-
-.ad-placeholder-content {
-  font-size: 0.82rem;
-  color: var(--text-muted);
-  font-weight: 500;
-}
-
 /* ==================== Below-fold info section ==================== */
 .info-section {
   display: flex;
