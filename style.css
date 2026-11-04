@@ -2,12 +2,12 @@
   /* Warm fintech palette: stone ground, warm-bordered white cards, deep ink
      headings. Chroma is reserved almost entirely for runway-health signalling
      -- the UI chrome itself stays warm-neutral. */
-  --primary: #1c1917;          /* stone-900, deep ink -- primary action */
-  --primary-hover: #292524;    /* stone-800 */
-  --primary-light: #f5f5f4;    /* stone-100, subtle tint */
+  --primary: #14171C;          /* stone-900, deep ink -- primary action */
+  --primary-hover: #2A2F37;    /* stone-800 */
+  --primary-light: #F1F3F5;    /* stone-100, subtle tint */
 
-  --accent: #047857;           /* emerald-700, brand accent + links */
-  --accent-soft: #ecfdf5;      /* emerald-50 */
+  --accent: #1558A8;           /* emerald-700, brand accent + links */
+  --accent-soft: #EAF1F8;      /* emerald-50 */
 
   --success: #047857;          /* emerald-700 */
   --success-bg: #ecfdf5;       /* emerald-50 */
@@ -25,22 +25,22 @@
   --danger-bg: #fef2f2;        /* red-50 */
   --danger-line: #dc2626;      /* red-600, chart stroke */
 
-  --neutral: #78716c;          /* stone-500 */
-  --neutral-bg: #f5f5f4;       /* stone-100 */
+  --neutral: #626A75;          /* stone-500 */
+  --neutral-bg: #F1F3F5;       /* stone-100 */
 
-  --bg: #f7f6f2;               /* warm stone ground */
-  --bg-deep: #efede8;          /* deeper warm stone, inset panels */
+  --bg: #F5F6F8;               /* warm stone ground */
+  --bg-deep: #ECEEF1;          /* deeper warm stone, inset panels */
   --card-bg: #ffffff;
-  --text: #1c1917;             /* stone-900 deep ink headings */
-  --text-body: #44403c;        /* stone-700 body */
-  --text-muted: #78716c;       /* stone-500 */
-  --border: #e7e5e4;           /* stone-200 */
-  --border-strong: #d6d3d1;    /* stone-300 */
+  --text: #14171C;             /* stone-900 deep ink headings */
+  --text-body: #3A4049;        /* stone-700 body */
+  --text-muted: #626A75;       /* stone-500 */
+  --border: #E1E4E9;           /* stone-200 */
+  --border-strong: #C9CED6;    /* stone-300 */
 
-  --shadow-sm: 0 1px 2px 0 rgba(28, 25, 23, 0.04), 0 1px 3px 0 rgba(28, 25, 23, 0.06);
-  --shadow-md: 0 2px 4px -1px rgba(28, 25, 23, 0.05), 0 4px 12px -2px rgba(28, 25, 23, 0.08);
+  --shadow-sm: none;
+  --shadow-md: 0 2px 8px rgba(20,23,28,.08);
 
-  --radius: 14px;
+  --radius: 12px;
   --radius-sm: 8px;
   --font: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
 }
@@ -62,13 +62,12 @@ body {
 .container {
   max-width: 1140px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 16px;
 }
 
 /* ============================ Header ============================ */
 .site-header {
   background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: saturate(180%) blur(8px);
   border-bottom: 1px solid var(--border);
   padding: 12px 0;
   position: sticky;
@@ -86,7 +85,7 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 1.15rem;
+  font-size: 20px;
   font-weight: 700;
   color: var(--text);
   letter-spacing: -0.01em;
@@ -105,13 +104,13 @@ body {
 
 .header-nav {
   display: flex;
-  gap: 22px;
+  gap: 24px;
 }
 
 .header-nav a {
   color: var(--text-muted);
   text-decoration: none;
-  font-size: 0.9rem;
+  font-size: 14px;
   font-weight: 500;
   transition: color 0.15s;
 }
@@ -126,7 +125,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 5px;
+  gap: 4px;
   width: 36px;
   height: 36px;
   padding: 0;
@@ -142,7 +141,7 @@ body {
   width: 18px;
   height: 2px;
   background: var(--text);
-  border-radius: 1px;
+  border-radius: 4px;
 }
 
 @media (max-width: 640px) {
@@ -159,7 +158,7 @@ body {
     background: var(--card-bg);
     border-bottom: 1px solid var(--border);
     box-shadow: var(--shadow-md);
-    padding: 4px 20px 12px;
+    padding: 4px 16px 12px;
   }
 
   .header-nav.is-open { display: flex; }
@@ -174,11 +173,11 @@ body {
 
 /* ==================== Compact page intro ==================== */
 .page-intro {
-  padding: 14px 0 14px;
+  padding: 12px 0 12px;
 }
 
 .page-intro h1 {
-  font-size: 1.6rem;
+  font-size: 24px;
   font-weight: 800;
   color: var(--text);
   letter-spacing: -0.02em;
@@ -186,7 +185,7 @@ body {
 }
 
 .page-intro-sub {
-  font-size: 0.95rem;
+  font-size: 16px;
   color: var(--text-muted);
   margin-top: 4px;
 }
@@ -195,7 +194,7 @@ body {
 .calculator-grid {
   display: grid;
   grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
-  gap: 20px;
+  gap: 16px;
   align-items: start;
   margin-bottom: 48px;
 }
@@ -209,7 +208,7 @@ body {
   border-radius: var(--radius);
   border: 1px solid var(--border);
   box-shadow: var(--shadow-sm);
-  padding: 20px;
+  padding: 16px;
 }
 
 .card-header {
@@ -217,12 +216,12 @@ body {
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 14px;
+  gap: 8px;
+  margin-bottom: 12px;
 }
 
 .card-header h2 {
-  font-size: 1.05rem;
+  font-size: 16px;
   font-weight: 700;
   color: var(--text);
   letter-spacing: -0.01em;
@@ -232,13 +231,13 @@ body {
 .preset-row {
   background: var(--bg-deep);
   border-radius: var(--radius-sm);
-  padding: 10px 12px;
-  margin-bottom: 18px;
+  padding: 8px 12px;
+  margin-bottom: 16px;
 }
 
 .preset-label {
   display: block;
-  font-size: 0.7rem;
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   font-weight: 700;
@@ -249,15 +248,15 @@ body {
 .preset-buttons {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 4px;
 }
 
 .btn-preset {
   background: var(--card-bg);
   border: 1px solid var(--border-strong);
-  border-radius: 999px;
-  padding: 5px 12px;
-  font-size: 0.78rem;
+  border-radius: 9999px;
+  padding: 4px 12px;
+  font-size: 12px;
   font-weight: 600;
   color: var(--text-body);
   cursor: pointer;
@@ -271,34 +270,34 @@ body {
 }
 
 /* ==================== Form ==================== */
-.form-group { margin-bottom: 13px; }
+.form-group { margin-bottom: 12px; }
 
 label {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 0.85rem;
+  font-size: 14px;
   font-weight: 600;
-  margin-bottom: 5px;
+  margin-bottom: 4px;
   color: var(--text-body);
 }
 
 .label-optional {
-  font-size: 0.68rem;
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   font-weight: 700;
   color: var(--text-muted);
   background: var(--bg-deep);
-  border-radius: 999px;
-  padding: 1px 7px;
-  margin-left: 6px;
+  border-radius: 9999px;
+  padding: 0px 8px;
+  margin-left: 4px;
 }
 
 .tooltip {
   color: var(--neutral);
   cursor: help;
-  font-size: 0.82rem;
+  font-size: 14px;
 }
 
 .input-prefix-wrapper,
@@ -337,10 +336,10 @@ label {
 
 input[type="number"] {
   width: 100%;
-  padding: 10px 14px;
+  padding: 8px 12px;
   border: 1px solid var(--border-strong);
   border-radius: var(--radius-sm);
-  font-size: 1rem;
+  font-size: 16px;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
   font-family: inherit;
@@ -357,25 +356,25 @@ input[type="number"] {
 input[type="number"]:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(4, 120, 87, 0.14);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 14%, transparent);
 }
 
 .field-hint {
   display: block;
-  font-size: 0.72rem;
+  font-size: 12px;
   color: var(--text-muted);
   margin-top: 4px;
 }
 
 .form-actions {
   display: flex;
-  gap: 10px;
-  margin-top: 18px;
+  gap: 8px;
+  margin-top: 16px;
 }
 
 .btn {
-  padding: 11px 18px;
-  font-size: 0.92rem;
+  padding: 12px 16px;
+  font-size: 14px;
   font-weight: 600;
   border-radius: var(--radius-sm);
   border: none;
@@ -406,15 +405,15 @@ input[type="number"]:focus {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  padding: 18px;
+  padding: 16px;
 }
 
 .badge {
   display: inline-block;
-  padding: 4px 10px;
-  font-size: 0.68rem;
+  padding: 4px 8px;
+  font-size: 12px;
   font-weight: 700;
-  border-radius: 999px;
+  border-radius: 9999px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   white-space: nowrap;
@@ -431,11 +430,11 @@ input[type="number"]:focus {
   background: var(--bg-deep);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 16px 18px;
+  padding: 16px 16px;
   transition: background 0.3s ease, border-color 0.3s ease;
 }
 
-.results-banner.status-success { background: var(--success-bg); border-color: rgba(4, 120, 87, 0.24); }
+.results-banner.status-success { background: var(--success-bg); border-color: color-mix(in srgb, var(--accent) 24%, transparent); }
 .results-banner.status-warning { background: var(--warning-bg); border-color: rgba(180, 83, 9, 0.24); }
 .results-banner.status-danger  { background: var(--danger-bg);  border-color: rgba(185, 28, 28, 0.22); }
 .results-banner.status-strong  { background: var(--strong-bg);  border-color: rgba(6, 95, 70, 0.24); }
@@ -444,11 +443,11 @@ input[type="number"]:focus {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 .results-banner-label {
-  font-size: 0.72rem;
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.07em;
   font-weight: 700;
@@ -458,7 +457,7 @@ input[type="number"]:focus {
 .results-banner-pills {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   flex-wrap: wrap;
   justify-content: flex-end;
 }
@@ -469,7 +468,7 @@ input[type="number"]:focus {
 #amortModePill {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 4px;
   background: rgba(255, 255, 255, 0.72);
   border: 1px solid var(--border-strong);
   color: var(--text-body);
@@ -490,7 +489,7 @@ input[type="number"]:focus {
 #defaultStatePill {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 4px;
   background: rgba(255, 255, 255, 0.72);
   border: 1px solid var(--border-strong);
   color: var(--text-body);
@@ -510,17 +509,17 @@ input[type="number"]:focus {
 #defaultStatePill.is-dead::before  { background: var(--danger-line); }
 
 .results-banner-value {
-  font-size: 3rem;
+  font-size: 32px;
   font-weight: 800;
   line-height: 1.05;
   letter-spacing: -0.03em;
   color: var(--text);
   font-variant-numeric: tabular-nums;
-  margin: 6px 0 2px;
+  margin: 4px 0 0px;
 }
 
 .results-banner-status {
-  font-size: 0.85rem;
+  font-size: 14px;
   font-weight: 600;
   color: var(--text-muted);
 }
@@ -529,15 +528,15 @@ input[type="number"]:focus {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
-  margin-top: 14px;
-  padding-top: 14px;
-  border-top: 1px solid rgba(28, 25, 23, 0.09);
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(20, 23, 28, 0.09);
 }
 
 .banner-stat { display: flex; flex-direction: column; min-width: 0; }
 
 .banner-stat-label {
-  font-size: 0.68rem;
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   font-weight: 700;
@@ -545,18 +544,18 @@ input[type="number"]:focus {
 }
 
 .banner-stat-value {
-  font-size: 1.05rem;
+  font-size: 16px;
   font-weight: 700;
   color: var(--text);
   font-variant-numeric: tabular-nums;
-  margin-top: 2px;
+  margin-top: 0px;
 }
 
 /* ---- Trajectory chart ---- */
 .gauge-panel {
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 12px 14px 6px;
+  padding: 12px 12px 4px;
   background: var(--card-bg);
 }
 
@@ -564,12 +563,12 @@ input[type="number"]:focus {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  gap: 10px;
-  margin-bottom: 6px;
+  gap: 8px;
+  margin-bottom: 4px;
 }
 
 .chart-title {
-  font-size: 0.78rem;
+  font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -577,7 +576,7 @@ input[type="number"]:focus {
 }
 
 .chart-subtitle {
-  font-size: 0.72rem;
+  font-size: 12px;
   color: var(--text-muted);
 }
 
@@ -594,7 +593,7 @@ input[type="number"]:focus {
 .secondary-stats {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
+  gap: 8px;
 }
 
 @media (max-width: 420px) {
@@ -611,7 +610,7 @@ input[type="number"]:focus {
 }
 
 .secondary-stat-label {
-  font-size: 0.66rem;
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   font-weight: 700;
@@ -619,24 +618,24 @@ input[type="number"]:focus {
 }
 
 .secondary-stat-value {
-  font-size: 0.95rem;
+  font-size: 16px;
   font-weight: 700;
   color: var(--text);
   font-variant-numeric: tabular-nums;
-  margin-top: 2px;
+  margin-top: 0px;
   overflow-wrap: anywhere;
 }
 
 /* ---- Health meter ---- */
-.benchmark-meter { padding: 2px 2px 0; }
+.benchmark-meter { padding: 0px 0px 0; }
 
 .meter-bar-track {
   position: relative;
   height: 8px;
-  border-radius: 999px;
+  border-radius: 9999px;
   display: flex;
   overflow: visible;
-  margin-bottom: 7px;
+  margin-bottom: 8px;
 }
 
 .meter-segment { height: 100%; }
@@ -663,8 +662,8 @@ input[type="number"]:focus {
   height: 16px;
   background: var(--text);
   border: 2px solid #ffffff;
-  border-radius: 3px;
-  box-shadow: 0 1px 3px rgba(28, 25, 23, 0.35);
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(20, 23, 28, 0.35);
   transform: translateX(-50%);
   transition: left 0.4s ease;
 }
@@ -672,7 +671,7 @@ input[type="number"]:focus {
 .meter-scale-markers {
   display: flex;
   justify-content: space-between;
-  font-size: 0.66rem;
+  font-size: 12px;
   color: var(--text-muted);
 }
 
@@ -680,57 +679,51 @@ input[type="number"]:focus {
 .info-section {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
 }
 
 .info-article {
   background: var(--card-bg);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 28px;
+  padding: 24px;
   box-shadow: var(--shadow-sm);
 }
 
 .info-article h2 {
-  font-size: 1.25rem;
+  font-size: 20px;
   font-weight: 800;
-  margin-bottom: 14px;
+  margin-bottom: 12px;
   color: var(--text);
   letter-spacing: -0.015em;
 }
 
 .info-article p { margin-bottom: 12px; }
-.info-article ul { padding-left: 20px; }
-.info-article li { margin-bottom: 6px; }
+.info-article ul { padding-left: 16px; }
+.info-article li { margin-bottom: 4px; }
 
-/* Framed cleanly with a full hairline border rather than a thick left accent
-   bar -- the emerald tint now arrives as a soft horizontal wash that fades
-   out, which reads as understated at a glance instead of as a callout stripe. */
 .formula-box {
-  background: linear-gradient(90deg,
-    rgba(5, 150, 105, 0.06) 0%,
-    rgba(247, 246, 242, 0.4) 35%,
-    rgba(247, 246, 242, 1) 100%);
+  background: var(--primary-light);
   border: 1px solid var(--border);   /* #e7e5e4 */
   border-radius: 12px;
-  padding: 18px;
-  margin: 14px 0;
+  padding: 16px;
+  margin: 12px 0;
 }
 
 .formula-line {
-  font-size: 1.05rem;
+  font-size: 16px;
   font-weight: 700;
   color: var(--accent);
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
-.formula-sub ul { padding-left: 20px; margin-top: 8px; }
-.formula-sub li { margin-bottom: 6px; color: var(--text-body); }
+.formula-sub ul { padding-left: 16px; margin-top: 8px; }
+.formula-sub li { margin-bottom: 4px; color: var(--text-body); }
 
 /* ==================== Benchmark table ==================== */
 .table-responsive {
   overflow-x: auto;
-  margin-top: 14px;
+  margin-top: 12px;
 }
 
 .benchmark-table {
@@ -743,14 +736,14 @@ input[type="number"]:focus {
 .benchmark-table td {
   padding: 12px 16px;
   border-bottom: 1px solid var(--border);
-  font-size: 0.88rem;
+  font-size: 14px;
 }
 
 .benchmark-table th {
   background-color: var(--bg-deep);
   font-weight: 700;
   color: var(--text);
-  font-size: 0.72rem;
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -771,7 +764,7 @@ input[type="number"]:focus {
   }
 
   .benchmark-table tr {
-    margin-bottom: 14px;
+    margin-bottom: 12px;
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
     padding: 4px 16px;
@@ -780,7 +773,7 @@ input[type="number"]:focus {
   .benchmark-table tr:last-child { margin-bottom: 0; }
 
   .benchmark-table td {
-    padding: 10px 0;
+    padding: 8px 0;
     border-bottom: 1px solid var(--border);
   }
 
@@ -789,7 +782,7 @@ input[type="number"]:focus {
   .benchmark-table td::before {
     content: attr(data-label);
     display: block;
-    font-size: 0.66rem;
+    font-size: 12px;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     font-weight: 700;
@@ -810,17 +803,17 @@ input[type="number"]:focus {
   background: var(--card-bg);
   padding: 24px 0;
   text-align: center;
-  font-size: 0.82rem;
+  font-size: 14px;
   color: var(--text-muted);
 }
 
 .footer-nav {
   display: flex;
   justify-content: center;
-  gap: 14px;
-  margin-bottom: 10px;
+  gap: 12px;
+  margin-bottom: 8px;
   flex-wrap: wrap;
-  font-size: 0.86rem;
+  font-size: 14px;
 }
 
 .footer-nav a {
@@ -865,9 +858,9 @@ input[type="number"]:focus {
 }
 
 .legal-article h2 {
-  font-size: 1.3rem;
+  font-size: 20px;
   font-weight: 800;
-  margin-top: 28px;
+  margin-top: 24px;
   margin-bottom: 12px;
   color: var(--text);
   letter-spacing: -0.015em;
@@ -878,17 +871,17 @@ input[type="number"]:focus {
 }
 
 .legal-article h3 {
-  font-size: 1.05rem;
+  font-size: 16px;
   font-weight: 700;
-  margin-top: 20px;
+  margin-top: 16px;
   margin-bottom: 8px;
   color: var(--text);
 }
 
 .legal-article p {
-  margin-bottom: 14px;
+  margin-bottom: 12px;
   color: var(--text-body);
-  font-size: 0.95rem;
+  font-size: 16px;
   line-height: 1.65;
 }
 
@@ -897,7 +890,7 @@ input[type="number"]:focus {
   padding-left: 24px;
   margin-bottom: 16px;
   color: var(--text-body);
-  font-size: 0.95rem;
+  font-size: 16px;
   line-height: 1.6;
 }
 
@@ -917,13 +910,13 @@ input[type="number"]:focus {
 
 .legal-meta {
   display: inline-block;
-  font-size: 0.82rem;
+  font-size: 14px;
   font-weight: 600;
   color: var(--text-muted);
   background: var(--primary-light);
   padding: 4px 12px;
-  border-radius: 999px;
-  margin-bottom: 20px;
+  border-radius: 9999px;
+  margin-bottom: 16px;
   border: 1px solid var(--border);
 }
 
@@ -931,13 +924,13 @@ input[type="number"]:focus {
   background: var(--bg-deep);
   border: 1px solid var(--border-strong);
   border-radius: var(--radius-sm);
-  padding: 18px 22px;
-  margin-top: 18px;
-  margin-bottom: 18px;
+  padding: 16px 24px;
+  margin-top: 16px;
+  margin-bottom: 16px;
 }
 
 .contact-card p {
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 
 .contact-card p:last-child {
@@ -948,9 +941,9 @@ input[type="number"]:focus {
   background: var(--warning-bg);
   border: 1px solid rgba(180, 83, 9, 0.25);
   border-radius: var(--radius-sm);
-  padding: 16px 20px;
-  margin: 20px 0;
-  font-size: 0.92rem;
+  padding: 16px 16px;
+  margin: 16px 0;
+  font-size: 14px;
   line-height: 1.55;
   color: #78350f;
 }
@@ -976,10 +969,10 @@ input[type="number"]:focus {
 
 select {
   width: 100%;
-  padding: 10px 14px;
+  padding: 8px 12px;
   border: 1px solid var(--border-strong);
   border-radius: var(--radius-sm);
-  font-size: 0.95rem;
+  font-size: 16px;
   font-weight: 600;
   font-family: inherit;
   background-color: var(--card-bg);
@@ -990,15 +983,15 @@ select {
 select:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(4, 120, 87, 0.14);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 14%, transparent);
 }
 
 /* Interest-only toggle */
 .toggle-row {
   background: var(--bg-deep);
   border-radius: var(--radius-sm);
-  padding: 9px 12px;
-  margin: 2px 0 12px;
+  padding: 8px 12px;
+  margin: 0px 0 12px;
 }
 
 .toggle-label {
@@ -1006,7 +999,7 @@ select:focus {
   display: flex;
   align-items: center;
   justify-content: flex-start;   /* overrides the global label rule */
-  gap: 10px;
+  gap: 8px;
   cursor: pointer;
   margin: 0;
   font-weight: 600;
@@ -1034,7 +1027,7 @@ select:focus {
   flex-shrink: 0;
   width: 38px;
   height: 22px;
-  border-radius: 999px;
+  border-radius: 9999px;
   background: var(--border-strong);
   transition: background 0.18s ease;
 }
@@ -1047,7 +1040,7 @@ select:focus {
   height: 16px;
   border-radius: 50%;
   background: #ffffff;
-  box-shadow: 0 1px 2px rgba(28, 25, 23, 0.3);
+  box-shadow: 0 1px 2px rgba(20, 23, 28, 0.3);
   transition: transform 0.18s ease;
 }
 
@@ -1060,20 +1053,23 @@ select:focus {
 }
 
 .toggle-label input:focus-visible + .toggle-track {
-  box-shadow: 0 0 0 3px rgba(4, 120, 87, 0.22);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
 }
 
 .toggle-text {
   display: flex;
   flex-direction: column;
-  font-size: 0.85rem;
+  font-size: 14px;
   color: var(--text-body);
   line-height: 1.3;
 }
 
 .toggle-text small {
-  font-size: 0.72rem;
+  font-size: 12px;
   font-weight: 500;
   color: var(--text-muted);
-  margin-top: 2px;
+  margin-top: 0px;
 }
+
+/* 44px tap targets on phones */
+@media (max-width: 768px){input,select,button,.nav-toggle{min-height:44px}}

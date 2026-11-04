@@ -177,10 +177,10 @@ function renderQualificationGauge(dscr, hasResult) {
     'var(--strong)';
   const readout = hasResult
     ? `<text x="${GAUGE.CX}" y="${GAUGE.CY - 40}" text-anchor="middle"
-             font-size="17" font-weight="800" letter-spacing="1.5" fill="${tierColor}"
+             font-size="16" font-weight="800" letter-spacing="1.5" fill="${tierColor}"
              font-family="system-ui, sans-serif">${tierLabel}</text>
        <text x="${GAUGE.CX}" y="${GAUGE.CY - 21}" text-anchor="middle"
-             font-size="11" font-weight="600" fill="var(--text-muted)"
+             font-size="12" font-weight="600" fill="var(--text-muted)"
              font-family="system-ui, sans-serif">${dscr >= GAUGE.MAX_DSCR ? 'above the 2.00x scale' : 'vs 1.25x threshold'}</text>`
     : '';
 
